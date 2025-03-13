@@ -18,7 +18,79 @@ const phoneNumberId = '641349695719475';
 const accessToken = 'EAAeIBK9Ah2EBOZCkwJb7Cf323G4Knt4LzeZBw0ZCSeFKXgkuEiGZAVP9d29NOtdGUgkAW2fZA3LklMV3sFWfYEcgvS6DI0d3lANJfnJ45ptuj8dGvONwhdWsJZArBLggF79zBoZBLfD84a0poBN6a4oqpnYyOkXIEsD8L6N5Co6sOMf3BiBE9yHXL2zDHNabUxSdy03MfRNK4k8wAAMOiqUPAN0C8fnL14ZAclMV';
 const verifyToken = 'secret_token';
 
-
+// Add this debugging code at the top of your webhook handler
+app.post('/webhook', async (req, res) => {
+  try {
+    // Log the entire incoming request for debugging
+    console.log('Webhook POST request body:', JSON.stringify(req.body, null, 2));
+    
+    const body = req.body;
+    
+    // Immediate response to WhatsApp to prevent timeouts
+    res.status(200).send('OK');
+    
+    // Continue with message processing
+    if (body.object === 'whatsapp_business_account') {
+      for (const entry of body.entry) {
+        for (const change of entry.changes) {
+          if (change.field === 'messages') {
+            // Log the messages value for debugging
+            console.log('Messages value:', JSON.stringify(change.value, null, 2));
+            
+            const messages = change.value.messages || [];
+            console.log(`Found ${messages.length} messages`);
+            
+            for (const message of messages) {
+              // Log each message for debugging
+              console.log('Processing message:', JSON.stringify(message, null, 2));
+              
+              // Only handle text messages
+              if (message.type === 'text') {
+                const from = message.from;
+                const text = message.text.body;
+                
+                console.log(`Received message from ${from}: ${text}`);
+                
+                try {
+                  // Attempt to analyze message
+                  console.log('Calling Gemini API...');
+                  const inventoryData = await analyzeInventoryUpdate(text);
+                  console.log('Gemini API response:', inventoryData);
+                  
+                  if (inventoryData) {
+                    // Send confirmation message
+                    const confirmationMessage = `${inventoryData.quantity} ${inventoryData.quantity_type} of ${inventoryData.item_name} ${inventoryData.action}!`;
+                    console.log(`Sending confirmation: ${confirmationMessage}`);
+                    const sendResult = await sendWhatsAppMessage(from, confirmationMessage);
+                    console.log('Send result:', sendResult);
+                  } else {
+                    console.log('Sending error message');
+                    const sendResult = await sendWhatsAppMessage(from, "Please send a correct inventory update message.");
+                    console.log('Send result:', sendResult);
+                  }
+                } catch (err) {
+                  console.error('Error in message processing:', err);
+                  try {
+                    await sendWhatsAppMessage(from, "Sorry, there was an error processing your message.");
+                  } catch (sendErr) {
+                    console.error('Error sending error message:', sendErr);
+                  }
+                }
+              } else {
+                console.log(`Ignoring non-text message of type: ${message.type}`);
+              }
+            }
+          }
+        }
+      }
+    } else {
+      console.log('Not a WhatsApp business account object:', body.object);
+    }
+  } catch (error) {
+    console.error('Error in webhook handler:', error);
+    // Already sent 200 OK at the beginning
+  }
+});
 // Function to analyze text with Gemini
 async function analyzeInventoryUpdate(text) {
   const prompt = `i will give you hindi or english text you're task to analyse three things in each msg 1 item 2 quantity 3 quantity type (kg, pair) 4 action (which is gonna be added or deducted) this is used to manage inventory provide only json no explanation the structure for json is
