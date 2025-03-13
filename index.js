@@ -9,14 +9,15 @@ const app = express();
 app.use(bodyParser.json());
 
 // Initialize Gemini API
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+const genAI = new GoogleGenerativeAI('AIzaSyCfxGYFjifxYpViB3-IrIpBzkyICerZmDI');
+const model = genAI.getGenerativeModel({ model: ' gemini-2.0-flash' });
 
 // WhatsApp API configuration
-const whatsappApiUrl = 'https://graph.facebook.com/v17.0/';
-const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID;
-const accessToken = process.env.WHATSAPP_ACCESS_TOKEN;
-const verifyToken = process.env.WHATSAPP_VERIFY_TOKEN;
+const whatsappApiUrl = 'https://graph.facebook.com/v22.0/';
+const phoneNumberId = '641349695719475';
+const accessToken = 'EAAeIBK9Ah2EBOZCkwJb7Cf323G4Knt4LzeZBw0ZCSeFKXgkuEiGZAVP9d29NOtdGUgkAW2fZA3LklMV3sFWfYEcgvS6DI0d3lANJfnJ45ptuj8dGvONwhdWsJZArBLggF79zBoZBLfD84a0poBN6a4oqpnYyOkXIEsD8L6N5Co6sOMf3BiBE9yHXL2zDHNabUxSdy03MfRNK4k8wAAMOiqUPAN0C8fnL14ZAclMV';
+const verifyToken = 'secret_token';
+
 
 // Function to analyze text with Gemini
 async function analyzeInventoryUpdate(text) {
