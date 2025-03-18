@@ -15,7 +15,7 @@ const model = genAI.getGenerativeModel({ model: ' gemini-2.0-flash' });
 // WhatsApp API configuration
 const whatsappApiUrl = 'https://graph.facebook.com/v22.0/';
 const phoneNumberId = '641349695719475';
-const accessToken = 'EAAeIBK9Ah2EBOZCkwJb7Cf323G4Knt4LzeZBw0ZCSeFKXgkuEiGZAVP9d29NOtdGUgkAW2fZA3LklMV3sFWfYEcgvS6DI0d3lANJfnJ45ptuj8dGvONwhdWsJZArBLggF79zBoZBLfD84a0poBN6a4oqpnYyOkXIEsD8L6N5Co6sOMf3BiBE9yHXL2zDHNabUxSdy03MfRNK4k8wAAMOiqUPAN0C8fnL14ZAclMV';
+const accessToken = 'EAAeIBK9Ah2EBO49LZAO8RqRFSmMBGyZB5hezmYd8kAo4FIV0ecwUfQLct6ceE4ntg54sstZBKYtImHGZAZAbwRMHmkaPP0rtHX5Eo1liFWKyvYxoyLjq5SXkhBzK0SaXN54Q5fvGVdiyoe9Akuu3dJExWPbdaYQBkgZCCnp3q8TLoJiPUybhb6RlB0wbFuWTtoa14pZAIBFrtoDf2V5ZBgqwODprJb0c3uknDY4ZD';
 const verifyToken = 'secret_token';
 
 // Add this debugging code at the top of your webhook handler
