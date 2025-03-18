@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 // WhatsApp API configuration
 const whatsappApiUrl = 'https://graph.facebook.com/v22.0/';
 const phoneNumberId = '641349695719475';
-const accessToken = 'EAAeIBK9Ah2EBO49LZAO8RqRFSmMBGyZB5hezmYd8kAo4FIV0ecwUfQLct6ceE4ntg54sstZBKYtImHGZAZAbwRMHmkaPP0rtHX5Eo1liFWKyvYxoyLjq5SXkhBzK0SaXN54Q5fvGVdiyoe9Akuu3dJExWPbdaYQBkgZCCnp3q8TLoJiPUybhb6RlB0wbFuWTtoa14pZAIBFrtoDf2V5ZBgqwODprJb0c3uknDY4ZD';
+const accessToken = 'EACEO7eT3jtQBO8CqlHsXmZBLc3TnHRncXPkt5cBIdr3bMu08deca280yiPYWKmRbf4tZA9HKbmfKvcAAl9SQXcu7S5RT57cxdEBBWS97sXphckT4YZBYPRdfK6tZAMlrxc4GhWpHgPcr1LwjPT7f9idx6U7HBs05HGxBI7fF9r4CZBkyTp54MJVpSvnkXgCVjZAD8M1ncIhN7wtMseqW8iD2vzlZCeqVsvPOS0ZD';
 const verifyToken = 'secret_token';
 
 // Function to send WhatsApp message
